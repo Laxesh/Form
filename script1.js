@@ -7,7 +7,7 @@ async function showData() {
 
   const filmName = await fetch("https://swapi.dev/api/films/");
   const filmRes = await filmName.json();
-  console.log(filmRes);
+  // console.log(filmRes);
 
   filmRes.results.forEach((film) => {
     obj[film.url] = film.title;
@@ -17,7 +17,7 @@ async function showData() {
   res.results.forEach((actor) => {
     // console.log(actor);
     actor.films = actor.films.map((film) => {
-      console.log(film);
+      // console.log(film);
       return obj[film];
     });
   });
