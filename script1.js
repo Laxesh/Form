@@ -12,7 +12,7 @@ async function showData() {
   filmRes.results.forEach((film) => {
     obj[film.url] = film.title;
   });
-  console.log(obj);
+  // console.log(obj)
 
   res.results.forEach((actor) => {
     // console.log(actor);
@@ -22,7 +22,7 @@ async function showData() {
     });
   });
 
-  console.log(res.results);
+  // console.log(res.results);
   // console.log(res);
 
   const tableData = document.getElementById("data");
@@ -46,12 +46,12 @@ async function nextPage() {
 
   const nextData = await fetch(`https://swapi.dev/api/people/?page=${sum}`);
   const nextRes = await nextData.json();
-  console.log(nextRes);
+  // console.log(nextRes);
 
   nextRes.results.forEach((actor) => {
     // console.log(actor);
     actor.films = actor.films.map((film) => {
-      console.log(film);
+      // console.log(film);
       return obj[film];
     });
   });
