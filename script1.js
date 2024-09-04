@@ -1,35 +1,30 @@
 const obj = {};
 
 async function showData() {
-  const data = await fetch("https://swapi.dev/api/people/");
-  const res = await data.json();
-  console.log(res);
+  const actorsRes = await fetch("https://swapi.dev/api/people/");
+  const actorsData = await actorsRes.json();
 
-  const filmName = await fetch("https://swapi.dev/api/films/");
-  const filmRes = await filmName.json();
-  // console.log(filmRes);
+  const allFilmsRes = await fetch("https://swapi.dev/api/films/");
+  const allFilmsData = await allFilmsRes.json();
 
   // const vehiclesName = await fetch("https://swapi.dev/api/vehicles/");
   // const vehiclesRes = await vehiclesName.json();
-  // console.log(vehiclesRes);
 
   // for (let v = 1; v < 5; v++) {
   //   const vehiclesName = await fetch(`https://swapi.dev/api/vehicles/?page=${v}`);
   //   const vehiclesRes = await vehiclesName.json();
-  //   console.log(vehiclesRes);
   // }
 
   // vehiclesRes.results.forEach((vehicle) => {
   //   obj[vehicle.url] = vehicle.name;
   // });
-  // console.log(obj);
 
-  filmRes.results.forEach((film) => {
+  allFilmsData.results.forEach((film) => {
     obj[film.url] = film.title;
   });
   // console.log(obj)
 
-  res.results.forEach((actor) => {
+  actorsData.results.forEach((actor) => {
     // console.log(actor);
     actor.films = actor.films.map((film) => {
       // console.log(film);
@@ -41,7 +36,7 @@ async function showData() {
   // console.log(res);
 
   const tableData = document.getElementById("data");
-  res.results.map((actor) => {
+  actorsData.results.map((actor) => {
     tableData.innerHTML += `
     <tr>
       <td>${actor.name}</td>
@@ -53,15 +48,13 @@ async function showData() {
 }
 showData();
 
-let sum = 1;
+let newPage = `https://swapi.dev/api/people/?page=2`;
 async function nextPage() {
   const showMore = document.getElementById("next");
   showMore.style.display = "none";
-  sum++;
 
-  const nextData = await fetch(`https://swapi.dev/api/people/?page=${sum}`);
+  const nextData = await fetch(newPage);
   const nextRes = await nextData.json();
-  // console.log(nextRes);
 
   nextRes.results.forEach((actor) => {
     // console.log(actor);
@@ -70,10 +63,6 @@ async function nextPage() {
       return obj[film];
     });
   });
-
-  if (nextRes.next === null) {
-    showMore.style.display = "none";
-  }
 
   nextRes.results.forEach((actor) => {
     document.getElementById("data").innerHTML += `<tr>
@@ -84,4 +73,9 @@ async function nextPage() {
       `;
   });
   showMore.style.display = "inline";
+
+  newPage = nextRes.next;
+  if (nextRes.next === null) {
+    showMore.style.display = "none";
+  }
 }
