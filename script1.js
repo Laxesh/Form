@@ -30,6 +30,7 @@ async function showData() {
       return obj[vehicle];
     });
   });
+  // console.log(actorsData);
 
   const tableData = document.getElementById("data");
   actorsData.results.map((actor) => {
