@@ -3,26 +3,23 @@ const obj = {};
 async function showData() {
   const actorsRes = await fetch("https://swapi.dev/api/people/");
   const actorsData = await actorsRes.json();
+  console.log(actorsRes.status);
 
   const allFilmsRes = await fetch("https://swapi.dev/api/films/");
   const allFilmsData = await allFilmsRes.json();
 
-  // const vehiclesName = await fetch("https://swapi.dev/api/vehicles/");
-  // const vehiclesRes = await vehiclesName.json();
+  const vehiclesName = await fetch("https://swapi.dev/api/vehicles/");
+  const vehiclesRes = await vehiclesName.json();
+  console.log(vehiclesRes);
 
-  // for (let v = 1; v < 5; v++) {
-  //   const vehiclesName = await fetch(`https://swapi.dev/api/vehicles/?page=${v}`);
-  //   const vehiclesRes = await vehiclesName.json();
-  // }
-
-  // vehiclesRes.results.forEach((vehicle) => {
-  //   obj[vehicle.url] = vehicle.name;
-  // });
+  vehiclesRes.results.forEach((vehicle) => {
+    obj[vehicle.url] = vehicle.name;
+  });
 
   allFilmsData.results.forEach((film) => {
     obj[film.url] = film.title;
   });
-  // console.log(obj)
+  // console.log(obj);
 
   actorsData.results.forEach((actor) => {
     // console.log(actor);
