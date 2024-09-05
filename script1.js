@@ -8,7 +8,7 @@ async function showData() {
   const allFilmsData = await allFilmsRes.json();
 
   const vehiclesRes = await fetch("https://swapi.dev/api/vehicles/");
-  const vehiclesData = await vehiclesName.json();
+  const vehiclesData = await vehiclesRes.json();
 
   vehiclesData.results.forEach((vehicles) => {
     obj[vehicles.url] = vehicles.name;
