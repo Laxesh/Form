@@ -4,9 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.5.1/uicons-bold-rounded/css/uicons-bold-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg"></nav>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">Navbar</a>
         <button
@@ -38,9 +52,13 @@
         </div>
       </div>
     </nav>
-    <textarea style="width: 500px; height: 100px" id="promptTextarea"></textarea><br />
-    <button style="width: 100px" id="submitBtn">Submit</button>
-    <p id="response"></p>
-    <script src="index.js"></script>
+    <div class="m-4">
+      <h1>GPT-3</h1>
+      <p>Enter your prompt</p>
+      <textarea style="width: 500px; height: 100px" id="promptTextarea"></textarea><br />
+      <button style="width: 100px" id="submitBtn">Submit</button>
+      <p id="response"></p>
+      <script src="index.js"></script>
+    </div>
   </body>
 </html>
