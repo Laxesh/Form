@@ -30,10 +30,7 @@ submitBtn.addEventListener("click", async () => {
     const response = await fetch(url, options);
     const result = await response.json();
     promptResponse.innerHTML = result.result;
-
-    console.log(result);
   } catch (error) {
     promptResponse.innerHTML = error;
-    console.error(error);
   }
 });
