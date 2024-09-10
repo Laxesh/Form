@@ -1,26 +1,37 @@
-let sum = 0;
-const firstName = document.querySelector("#FirstName");
-const showName = document.querySelector("#name");
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const names = [];
+const buttonsState = {};
 
-function submit() {
-  sum++;
+function createbutton() {
+  const buttonsContainer = document.getElementById("buttonsContainer");
+  for (const char in alphabet) {
+    const button = document.createElement("button");
+    button.textContent = alphabet[char];
+    buttonsContainer.appendChild(button);
+    button.id = `btn-${char}`;
+    button.style = "margin  : 10px";
+    button.addEventListener("click", () => handleAlphabetButtonClick(char));
+  }
+}
+createbutton();
 
-  const arr = [];
-  arr.push(firstName.value);
-  console.log(arr);
+function submitName() {
+  const name = document.getElementById("name").value;
 
-  showName.insertAdjacentHTML(
-    "beforeend",
-    `
-        <p id="inputName${sum}">${sum} . ${firstName.value}</p>
-    `
-  );
+  names.push(name);
+  localStorage.setItem("names", JSON.stringify(names));
 }
 
-async function displayData() {
-  const data = await fetch("https://swapi.dev/api/people/");
-  const res = await data.json();
-  console.log(res);
-}
+function handleAlphabetButtonClick(char) {
+  const button = document.getElementById(`btn-${char}`);
+  const isActive = button.classList.contains("highlight");
 
-displayData();
+  // Toggle button state
+  if (isActive) {
+    button.classList.remove("highlight");
+    buttonsState[char] = false;
+  } else {
+    button.classList.add("highlight");
+    buttonsState[char] = true;
+  }
+}
