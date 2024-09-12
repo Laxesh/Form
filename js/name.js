@@ -2,36 +2,107 @@ const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const names = [];
 const buttonsState = {};
 
-const namesStartWithFirstCharacters = {};
-
-function createButton() {
+document.addEventListener("DOMContentLoaded", () => {
+  // Create alphabet buttons
   const buttonsContainer = document.getElementById("buttonsContainer");
-  for (const char in alphabet) {
+  for (let char of alphabet) {
     const button = document.createElement("button");
-    button.textContent = alphabet[char];
+    button.textContent = char;
+    button.id = `btn-${char}`;
+    button.addEventListener("click", () => handleAlphabetButtonClick(char));
     buttonsContainer.appendChild(button);
-    button.id = `btn-${alphabet[char]}`;
-    button.style = "margin  : 10px";
+    buttonsState[char] = false;
+  }
+
+  // Create "ALL" button
+  const allButton = document.createElement("button");
+  allButton.textContent = "ALL";
+  allButton.addEventListener("click", () => handleAllButtonClick());
+  buttonsContainer.appendChild(allButton);
+});
+
+function submitName() {
+  const nameInput = document.getElementById("name");
+  const name = nameInput.value.trim();
+  if (name) {
+    names.push(name);
+    updateButtonsState();
+    nameInput.value = "";
   }
 }
 
-createButton();
+function updateButtonsState() {
+  const allButtons = document.querySelectorAll("#buttonsContainer button");
+  // Reset all button states
+  allButtons.forEach((button) => {
+    button.classList.remove("highlight");
+    button.classList.remove("disabled");
+  });
 
-function submitName() {
-  const name = document.getElementById("name").value;
+  // Update buttons state based on submitted names
+  const startingLetters = new Set(names.map((name) => name[0].toUpperCase()));
+  for (let char of alphabet) {
+    const button = document.getElementById(`btn-${char}`);
+    if (startingLetters.has(char)) {
+      button.disabled = false;
+    } else {
+      button.disabled = true;
+      button.classList.add("disabled");
+    }
+  }
+}
 
-  if(!name.trim()) throw new Error("Please enter a name!!!");
+function handleAlphabetButtonClick(char) {
+  const button = document.getElementById(`btn-${char}`);
+  const isActive = button.classList.contains("highlight");
 
-  const firstCharacter = name[0]; // getting the first character of the name
-
-  if(!(firstCharacter in namesStartWithFirstCharacters)) {
-    namesStartWithFirstCharacters[firstCharacter] = [name];
-  }else{
-    namesStartWithFirstCharacters[firstCharacter].push(name);
+  // Toggle button state
+  if (isActive) {
+    button.classList.remove("highlight");
+    buttonsState[char] = false;
+  } else {
+    button.classList.add("highlight");
+    buttonsState[char] = true;
   }
 
-  document.getElementById(`btn-${alphabet[char]}`).innerText = `${firstCharacter} (${namesStartWithFirstCharacters[firstCharacter].length})`;
+  displayNames();
+}
 
-  names.push(name);
-  localStorage.setItem("names", JSON.stringify(names));
+function handleAllButtonClick() {
+  const allButtons = document.querySelectorAll("#buttonsContainer button");
+  allButtons.forEach((button) => {
+    button.classList.remove("highlight");
+  });
+
+  // Clear all selections
+  for (let char of alphabet) {
+    buttonsState[char] = false;
+  }
+
+  displayNames();
+}
+
+function displayNames() {
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  // Collect names to display based on the buttons clicked
+  const displayList = [];
+  for (let char of alphabet) {
+    if (buttonsState[char]) {
+      const namesForChar = names.filter((name) => name[0].toUpperCase() === char);
+      displayList.push(...namesForChar);
+    }
+  }
+
+  if (buttonsState["ALL"]) {
+    displayList.push(...names);
+  }
+
+  // Display names
+  displayList.forEach((name) => {
+    const p = document.createElement("p");
+    p.textContent = name;
+    resultsDiv.appendChild(p);
+  });
 }
