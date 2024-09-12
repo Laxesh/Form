@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttonsContainer = document.getElementById("buttonsContainer");
   for (let char of alphabet) {
     const button = document.createElement("button");
+    button.classList.add("btn", "btn-primary", "m-1");
     button.textContent = char;
     button.id = `btn-${char}`;
     button.addEventListener("click", () => handleAlphabetButtonClick(char));
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create "ALL" button
   const allButton = document.createElement("button");
   allButton.textContent = "ALL";
+  allButton.classList.add("btn", "btn-primary", "m-1");
   allButton.addEventListener("click", () => handleAllButtonClick());
   buttonsContainer.appendChild(allButton);
 });
