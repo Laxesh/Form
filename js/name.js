@@ -117,3 +117,6 @@ window.onload = () => {
   namesStartWithFirstCharacters = getFromLocalStorage("namesStartWithFirstCharacters") || {};
   createButton();
 }
+
+console.log(names);
+console.log(buttonsState);
