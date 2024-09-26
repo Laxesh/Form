@@ -31,6 +31,9 @@ function submitName() {
     inputName.value = " ";
   }
   localStorage.setItem("names", JSON.stringify(names));
+
+  console.log(names);
+  console.log(buttonsState);
 }
 
 function handleAllButtonClick() {
@@ -47,3 +50,6 @@ function clickButton(char) {
     }
   });
 }
+
+console.log(names);
+console.log(buttonsState);
