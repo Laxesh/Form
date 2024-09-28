@@ -9,7 +9,7 @@ function createButton() {
     button.textContent = alphabet[char];
     buttonsContainer.appendChild(button);
     button.addEventListener("click", () => {
-      clickButton("char");
+      clickButton(alphabet[char]);
     });
     button.id = `${alphabet[char]}`;
     button.style = "margin  : 10px";
@@ -43,17 +43,14 @@ function submitName() {
 
 function clickButton(char) {
   const results = document.getElementById("results");
-  console.log(buttonsState);
 
-  if (char == "all") {
+  if (char === "all") {
     results.innerHTML = "";
     names = Object.values(buttonsState).flat();
   } else {
     results.innerHTML = "";
     names = buttonsState[char];
-    console.log("g", names);
   }
-  console.log(names);
   names.forEach((name) => {
     results.innerHTML += `<li>${name}</li>`;
   });
