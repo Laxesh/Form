@@ -38,7 +38,12 @@ function submitName() {
 
   document.getElementById(`${firstchar}`).innerText = `${firstchar} (${buttonsState[firstchar].length})`;
 
-  inputName.value = "";
+  if (buttonsState[firstchar].length > 0) {
+    console.log("object");
+    document.getElementById(`${firstchar}`).style = "background-color: green;";
+  }
+
+  document.getElementById("name").value = "";
 }
 
 function clickButton(char) {
@@ -48,7 +53,6 @@ function clickButton(char) {
     results.innerHTML = "";
     names = Object.values(buttonsState).flat();
   } else {
-    results.innerHTML = "";
     names = buttonsState[char];
   }
   names.forEach((name) => {
